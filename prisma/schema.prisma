@@ -10,7 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -25,9 +24,13 @@ model User {
   @@map("users")
 }
 
+model Messages {
+  id       String @id @default(cuid())
+  messages String
+}
 
 enum Role {
-  ADMIN   @map("admin")
+  ADMIN  @map("admin")
   MEMBER @map("member")
 
   @@map("_Role")
