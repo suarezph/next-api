@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "db:migrate": "dotenv -e .env.local npx prisma migrate dev --name user-entity --create-only && npx prisma generate",
-    "db:push": "dotenv -e .env.local npx prisma db push"
+    "lint": "next lint"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
