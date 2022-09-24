@@ -16,6 +16,7 @@ const handler = async (
       id: true,
       email: true,
       name: true,
+      photo: true,
       createdAt: true,
       updatedAt: true,
     },
