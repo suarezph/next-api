@@ -19,7 +19,7 @@ const requireAuth = (
     if (!token)
       return response.status(401).json({
         success: false,
-        message: 'Unauthorized: Please login to get access',
+        message: 'Unauthorized 1: Please login to get access',
       });
 
     if (token.startsWith('Bearer ')) token = token.substring(7, token.length);
@@ -55,7 +55,7 @@ const requireAuth = (
     } catch (err) {
       return response.status(401).json({
         success: false,
-        message: 'Unauthorized: Please login to get access',
+        message: 'Unauthorized 2: Please login to get access',
       });
     }
   };
