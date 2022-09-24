@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const handle = (request: WithUserApiRequest, response: NextApiResponse) => {
   if (request.method !== 'GET')
-    return response.status(400).json({
+    return response.status(422).json({
       success: false,
       message: `The HTTP ${request.method} method is not supported by this route.`,
     });

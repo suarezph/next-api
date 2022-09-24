@@ -12,9 +12,10 @@ export default async function handler(
   response: NextApiResponse,
 ) {
   if (request.method !== 'POST')
-    throw new Error(
-      `The HTTP ${request.method} method is not supported by this route.`,
-    );
+    return response.status(422).json({
+      success: false,
+      message: `The HTTP ${request.method} method is not supported by this route.`,
+    });
 
   let user;
   const { email, password } = request.body;
@@ -26,7 +27,7 @@ export default async function handler(
       },
     });
   } catch (e) {
-    return response.status(400).json({
+    return response.status(500).json({
       success: false,
       message: 'Internal server error. Please try again later',
       log: e,
@@ -34,7 +35,7 @@ export default async function handler(
   }
 
   if (!user || !user.password) {
-    return response.status(400).json({
+    return response.status(422).json({
       success: false,
       message: 'Credentials are invalid. Please try again.',
     });
@@ -43,7 +44,7 @@ export default async function handler(
   const isValid = await verifyPassword(password, user.password);
 
   if (!isValid) {
-    return response.status(400).json({
+    return response.status(422).json({
       success: false,
       message: 'Credentials are invalid. Please try again.',
     });

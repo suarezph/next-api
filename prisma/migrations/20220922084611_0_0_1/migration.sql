@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "_Role" AS ENUM ('admin', 'member');
+CREATE TYPE "_role" AS ENUM ('admin', 'member');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -8,12 +8,20 @@ CREATE TABLE "users" (
     "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "email_verified" TIMESTAMP(3),
-    "image" TEXT,
-    "role" "_Role" NOT NULL DEFAULT 'member',
+    "photo" TEXT,
+    "role" "_role" NOT NULL DEFAULT 'member',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "messages" (
+    "id" TEXT NOT NULL,
+    "messages" TEXT NOT NULL,
+
+    CONSTRAINT "messages_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

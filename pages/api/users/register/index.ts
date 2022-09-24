@@ -1,20 +1,34 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../../lib/prisma';
-import { hashPassword } from '../../../../lib/auth';
+import { prisma } from 'lib/prisma';
+import { hashPassword } from 'lib/auth';
+import validateRegistration from 'validations/registration';
 
 export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
   if (request.method !== 'POST')
-    throw new Error(
-      `The HTTP ${request.method} method is not supported by this route.`,
-    );
+    return response.status(500).json({
+      success: false,
+      message: `The HTTP ${request.method} method is not supported by this route.`,
+    });
 
   let user = request.body;
+  delete user.files;
+
+  const validate = validateRegistration(user);
+
+  if (validate && validate.length > 0) {
+    return response.status(422).json({
+      success: false,
+      errors: validate,
+    });
+  }
 
   user = {
-    ...user,
+    name: user.name,
+    photo: user.photo,
+    gender: user.gender,
     ...{
       email: user.email.toLowerCase(),
       password: await hashPassword(String(user.password)),
@@ -32,17 +46,28 @@ export default async function handler(
     return response.json({ success: true, data: userData });
   } catch (e) {
     if (e.code === 'P2002') {
-      return response.status(409).json({
+      return response.status(422).json({
         success: false,
-        error: 'Email address already exists',
-        errorCode: e.code,
+        errors: [
+          {
+            email: 'Email address already exists',
+          },
+        ],
       });
     }
 
     return response.status(500).json({
       success: false,
+      message: 'Internal esrver error: Please refresh and try again!',
       error: e.message,
-      errorCode: e.code,
     });
   }
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '4mb',
+    },
+  },
+};

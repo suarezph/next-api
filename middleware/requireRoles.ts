@@ -3,7 +3,7 @@ import type { WithUserApiRequest } from 'types/handler';
 
 const requireRoles = (
   fn: (req: WithUserApiRequest, res: NextApiResponse) => void,
-  roles: [string],
+  roles: string[],
 ) => {
   return async (request: WithUserApiRequest, response: NextApiResponse) => {
     if (!roles.includes(request.user?.role)) {
