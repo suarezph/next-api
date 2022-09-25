@@ -28,10 +28,10 @@ export default async function handle(
     });
 
   try {
-    const decoded = (await jwt.verify(
+    const decoded = await (jwt.verify(
       token,
       serverRuntimeConfig.accessSecretKey,
-    )) as JwtPayload;
+    ) as JwtPayload);
     if (decoded) {
       const accessToken = generateAccessToken(
         { id: decoded.id, email: decoded.email },

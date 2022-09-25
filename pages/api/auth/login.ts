@@ -50,14 +50,14 @@ export default async function handler(
     });
   }
 
-  const accessToken = generateAccessToken(
+  const accessToken = await generateAccessToken(
     { id: user.id, email: user.email! },
     {
       expiresIn: '1d',
     },
   );
 
-  const refreshToken = generateRefreshToken(
+  const refreshToken = await generateRefreshToken(
     { id: user.id, email: user.email! },
     {
       expiresIn: '5d',

@@ -25,10 +25,10 @@ const requireAuth = (
     if (token.startsWith('Bearer ')) token = token.substring(7, token.length);
 
     try {
-      const decoded = (await jwt.verify(
+      const decoded = await (jwt.verify(
         token,
         serverRuntimeConfig.accessSecretKey,
-      )) as JwtPayload;
+      ) as JwtPayload);
       if (decoded) {
         const currentUser = await prisma.user.findUnique({
           where: {
