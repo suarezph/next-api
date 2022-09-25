@@ -57,7 +57,7 @@ export default async function handler(
     },
   );
 
-  const refreshToken = await generateRefreshToken(
+  const refreshToken = generateRefreshToken(
     { id: user.id, email: user.email! },
     {
       expiresIn: '5d',
