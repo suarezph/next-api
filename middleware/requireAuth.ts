@@ -24,6 +24,7 @@ const requireAuth = (
 
     if (token.startsWith('Bearer ')) token = token.substring(7, token.length);
 
+    console.log(serverRuntimeConfig.accessSecretKey);
     try {
       const decoded = await (jwt.verify(
         token,
