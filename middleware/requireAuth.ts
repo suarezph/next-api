@@ -24,7 +24,6 @@ const requireAuth = (
 
     if (token.startsWith('Bearer ')) token = token.substring(7, token.length);
 
-    console.log(serverRuntimeConfig.accessSecretKey);
     try {
       const decoded = await (jwt.verify(
         token,
@@ -57,6 +56,7 @@ const requireAuth = (
       return response.status(401).json({
         success: false,
         message: 'Unauthorized 2: Please login to get access',
+        token: serverRuntimeConfig.accessSecretKey,
       });
     }
   };

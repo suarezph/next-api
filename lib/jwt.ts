@@ -26,3 +26,5 @@ export function generateRefreshToken(
     options,
   );
 }
+
+export default serverRuntimeConfig;

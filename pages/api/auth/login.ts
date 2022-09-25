@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from 'lib/prisma';
-import { generateAccessToken, generateRefreshToken } from 'lib/jwt';
+import serverRuntimeConfig, {
+  generateAccessToken,
+  generateRefreshToken,
+} from 'lib/jwt';
 import { verifyPassword } from 'lib/auth';
 // import cookie from 'cookie';
 
@@ -81,5 +84,6 @@ export default async function handler(
     success: true,
     accessToken,
     refreshToken,
+    token: serverRuntimeConfig,
   });
 }
