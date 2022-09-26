@@ -2,8 +2,8 @@ import type { NextApiResponse } from 'next';
 import type { WithUserApiRequest } from 'types/handler';
 import requireAuth from 'middleware/requireAuth';
 import requireRoles from 'middleware/requireRoles';
-import { Roles } from 'lib/prisma';
-import { Role, prisma } from '@prisma/client';
+import { Roles, prisma } from 'lib/prisma';
+import { Role } from '@prisma/client';
 
 const handler = async (
   request: WithUserApiRequest,
