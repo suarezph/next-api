@@ -28,7 +28,7 @@ model User {
 }
 
 enum Gender {
-  MALE  @map("male")
+  MALE   @map("male")
   FEMALE @map("female")
 
   @@map("_gender")

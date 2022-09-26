@@ -19,16 +19,16 @@ const requireAuth = (
     if (!token)
       return response.status(401).json({
         success: false,
-        message: 'Unauthorized 1: Please login to get access',
+        message: 'Unauthorized: Please login to get access',
       });
 
     if (token.startsWith('Bearer ')) token = token.substring(7, token.length);
 
     try {
-      const decoded = await (jwt.verify(
+      const decoded = (await jwt.verify(
         token,
         serverRuntimeConfig.accessSecretKey,
-      ) as JwtPayload);
+      )) as JwtPayload;
       if (decoded) {
         const currentUser = await prisma.user.findUnique({
           where: {
@@ -55,8 +55,7 @@ const requireAuth = (
     } catch (err) {
       return response.status(401).json({
         success: false,
-        message: 'Unauthorized 2: Please login to get access',
-        token: serverRuntimeConfig.accessSecretKey,
+        message: 'Unauthorized: Please login to get access',
       });
     }
   };

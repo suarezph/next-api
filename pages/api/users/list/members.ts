@@ -3,13 +3,13 @@ import type { WithUserApiRequest } from 'types/handler';
 import requireAuth from 'middleware/requireAuth';
 import requireRoles from 'middleware/requireRoles';
 import { Roles } from 'lib/prisma';
-import { Role } from '@prisma/client';
+import { Role, prisma } from '@prisma/client';
 
 const handler = async (
   request: WithUserApiRequest,
   response: NextApiResponse,
 ) => {
-  const users = await prisma?.user.findMany({
+  const users = await prisma.user.findMany({
     where: {
       id: { not: request.user.id },
       role: Role.MEMBER,

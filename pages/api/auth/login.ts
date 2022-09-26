@@ -84,6 +84,5 @@ export default async function handler(
     success: true,
     accessToken,
     refreshToken,
-    token: serverRuntimeConfig,
   });
 }

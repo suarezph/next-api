@@ -2,13 +2,13 @@ import type { NextApiResponse } from 'next';
 import type { WithUserApiRequest } from 'types/handler';
 import requireAuth from 'middleware/requireAuth';
 import requireRoles from 'middleware/requireRoles';
-import { Roles } from 'lib/prisma';
+import { Roles, prisma } from 'lib/prisma';
 
 const handler = async (
   request: WithUserApiRequest,
   response: NextApiResponse,
 ) => {
-  const users = await prisma?.user.findMany({
+  const users = await prisma.user.findMany({
     where: {
       id: { not: request.user.id },
     },
