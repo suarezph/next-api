@@ -1,5 +1,6 @@
-import Joi from 'joi';
+import Joi, { ValidationError } from 'joi';
 import { capitalizeLetter } from 'utils/helper';
+import CustomError from './custom';
 
 export type RegistrationType = {
   email: string;
@@ -27,24 +28,12 @@ export default function validateRegistration(values: RegistrationType) {
       .messages({
         'any.regex.base': 'Must contain 8 alphanumeric characters' || undefined,
       }),
-    confirm_password: Joi.any().equal(Joi.ref('password')).messages({
+    confirm_password: Joi.required().equal(Joi.ref('password')).messages({
       'any.only': 'It must match with the above primary password',
     }),
   });
 
   const { error } = validationSchema.validate(values, { abortEarly: false });
 
-  let errors: ErrorType[] = [];
-
-  if (error) {
-    error.details.map(item => {
-      errors.push({
-        [`${item?.context?.key}`]: capitalizeLetter(
-          item.message.replace(/"/g, ''),
-        ),
-      });
-    });
-  }
-
-  return errors;
+  return CustomError(error as ValidationError);
 }
