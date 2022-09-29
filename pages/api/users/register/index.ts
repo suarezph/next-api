@@ -15,7 +15,7 @@ export default async function handler(
       message: `The HTTP ${request.method} method is not supported by this route.`,
     });
 
-  let user = request.body as RegistrationType;
+  let user = request.body;
   delete user.files;
 
   const validate = validateRegistration(user);
