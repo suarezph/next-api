@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from 'lib/prisma';
 import { hashPassword } from 'lib/auth';
-import validateRegistration from 'validations/registration';
+import validateRegistration, {
+  RegistrationType,
+} from 'validations/registration';
 
 export default async function handler(
   request: NextApiRequest,
@@ -13,7 +15,7 @@ export default async function handler(
       message: `The HTTP ${request.method} method is not supported by this route.`,
     });
 
-  let user = request.body;
+  let user = request.body as RegistrationType;
   delete user.files;
 
   const validate = validateRegistration(user);
